@@ -7,17 +7,24 @@
 //things to consider: cant pick taken space, how to evaluate win conditions
 
 const gameBoard = (function () {
-    const board = ['','','','','','','','','']
-    return { board };
+    const board =  ['','','',
+                    '','','',
+                    '','',''];
+
+    const printBoard = blahblahblah;
+    
+    return { board, printBoard };
 })();
 
-function player();
+function player() {
+
+};
 
 function gameController() {
     let playerOne = "Player One";
     let cpu = "Computer Player";
 
-    
+
 };
 
 console.log(gameBoard.board)
