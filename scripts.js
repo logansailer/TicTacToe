@@ -7,22 +7,41 @@
 //things to consider: cant pick taken space, how to evaluate win conditions
 
 const gameBoard = (function () {
-    const board =  ['','','',
-                    '','','',
-                    '','',''];
+    //creates initial board
+    const board = () => {
+        ['','','','','','','','',''];
+    }
 
-    const printBoard = blahblahblah;
+    //resets board to blank
+    const resetBoard = (function () {
+        board = ['','','','','','','','',''];
+    })
+
+    //checks if cell is empty
+    const isEmpty = (i) => board(i) === '';
+
+    //places mark for appropriate player on board
+    const placePiece = (piece, i) => {
+        if(isEmpty[i]) { //i should maybe be wrapped in parenthesis?
+            board[i] = piece;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //function to check for win/tie
     
-    return { board, printBoard };
+    return { board, resetBoard, isEmpty, placePiece };
 })();
 
-function player() {
-
+function player (name, piece) {
+    return { name, piece }
 };
 
 function gameController() {
     let playerOne = "Player One";
-    let cpu = "Computer Player";
+    let playerTwo = "PLayer Two";
 
 
 };
