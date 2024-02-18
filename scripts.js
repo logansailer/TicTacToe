@@ -6,24 +6,24 @@
 
 //things to consider: cant pick taken space, how to evaluate win conditions
 
-const gameBoard = (function () {
+const GameBoard = (function () {
     //creates initial board
-    const board = () => {
+    let board = () => {
         ['','','','','','','','',''];
-    }
+    };
 
     //resets board to blank
-    const resetBoard = (function () {
+    const resetBoard = () => {
         board = ['','','','','','','','',''];
-    })
+    };
 
     //checks if cell is empty
-    const isEmpty = (i) => board(i) === '';
+    const isEmpty = (index) => board[index] === '';
 
     //places mark for appropriate player on board
-    const placePiece = (piece, i) => {
-        if(isEmpty[i]) { //i should maybe be wrapped in parenthesis?
-            board[i] = piece;
+    const placePiece = (piece, index) => {
+        if(isEmpty(index)) {
+            board[index] = piece;
             return true;
         } else {
             return false;
@@ -31,20 +31,43 @@ const gameBoard = (function () {
     }
 
     //function to check for win/tie
+    const checkForWin = () => {
+        //return true for winner
+    }
     
     return { board, resetBoard, isEmpty, placePiece };
 })();
 
-function player (name, piece) {
+function Player (name, piece) {
     return { name, piece }
 };
 
-function gameController() {
-    let playerOne = "Player One";
-    let playerTwo = "PLayer Two";
+const GameController = (() => {
+    let currentPlayer = p1;
+    let winner = null;
 
+    const switchPlayer = () => {
+        if (currentPlayer = p1) {
+            currentPlayer = p2;
+        } else {
+            currentPlayer = p1;
+        }
+    }
 
-};
+    const makeMove = (index) => {
+        if(!winner && GameBoard.isEmpty(index)) {
+            GameBoard.placePiece(currentPlayer.piece, index);
+            winner = gameBoard.checkForWin()
+            if (winner && winner != 'tie') {
+                winnder = currentPlayer;
+            }
+            switchPlayer();
+        }
+    }
+});
+
+const p1 = Player('Player 1', 'X');
+const p2 = Player('Player 2', 'O');
 
 console.log(gameBoard.board)
 
