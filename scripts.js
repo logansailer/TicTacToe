@@ -1,16 +1,11 @@
-//factory to create board IIFE
-//factory to keep score using play 1 name and pkayer 2 name
-//randomizer to see who goes first
-//How it should work: CP picks random empty space, player picks empty space.
-//when x or o placed, index into array and place x or o
+const p1 = Player('Player 1', 'X');
+const p2 = Player('Player 2', 'O');
 
-//things to consider: cant pick taken space, how to evaluate win conditions
-
-const GameBoard = (function () {
+const GameBoard = (() => {
     //creates initial board
-    let board = () => {
-        ['','','','','','','','',''];
-    };
+    let board =  ['','','','','','','','',''];
+
+    const getBoard = () => board;
 
     //resets board to blank
     const resetBoard = () => {
@@ -32,10 +27,14 @@ const GameBoard = (function () {
 
     //function to check for win/tie
     const checkForWin = () => {
-        //return true for winner
+        const winningCombos = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]];
+        return false;
     }
     
-    return { board, resetBoard, isEmpty, placePiece };
+    return { getBoard, resetBoard, isEmpty, placePiece, checkForWin };
 })();
 
 function Player (name, piece) {
@@ -54,20 +53,42 @@ const GameController = (() => {
         }
     }
 
-    const makeMove = (index) => {
+    const move = (index) => {
         if(!winner && GameBoard.isEmpty(index)) {
             GameBoard.placePiece(currentPlayer.piece, index);
-            winner = gameBoard.checkForWin()
+            winner = GameBoard.checkForWin()
             if (winner && winner != 'tie') {
-                winnder = currentPlayer;
+                winner = currentPlayer;
             }
             switchPlayer();
         }
     }
-});
 
-const p1 = Player('Player 1', 'X');
-const p2 = Player('Player 2', 'O');
+    const getWinner = () => winner;
 
-console.log(gameBoard.board)
+    return {switchPlayer, move, getWinner}
+})();
 
+const makeBoard = () => {
+    const board = document.querySelector('#board');
+    board.innerHTML = '';
+
+    for (let i = 0; i < 9; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.dataset.index = i;
+        cell.textContent = GameBoard.getBoard()[i];
+
+        cell.addEventListener('click', () => {
+            console.log(GameBoard.isEmpty(i))
+            console.log(GameController.getWinner())
+            if(!GameController.getWinner() && GameBoard.isEmpty(i)) {
+                GameController.move(i);
+                makeBoard()
+            }
+        })
+        board.appendChild(cell);
+    }
+};
+
+makeBoard()
