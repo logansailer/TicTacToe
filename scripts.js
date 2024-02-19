@@ -31,12 +31,15 @@ const GameBoard = (() => {
             [0, 1, 2], [3, 4, 5], [6, 7, 8],
             [0, 3, 6], [1, 4, 7], [2, 5, 8],
             [0, 4, 8], [2, 4, 6]];
-        return false;
+        for (let i of winningCombos) {
+            if (i) {}
+        } return false;
     }
     
     return { getBoard, resetBoard, isEmpty, placePiece, checkForWin };
 })();
 
+//creates player
 function Player (name, piece) {
     return { name, piece }
 };
@@ -52,7 +55,7 @@ const GameController = (() => {
             currentPlayer = p1;
         }
     }
-
+    //places piece in clicked tile, then checks if that move wins game. If not, switches player
     const move = (index) => {
         if(!winner && GameBoard.isEmpty(index)) {
             GameBoard.placePiece(currentPlayer.piece, index);
@@ -76,7 +79,6 @@ const makeBoard = () => {
     for (let i = 0; i < 9; i++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
-        cell.dataset.index = i;
         cell.textContent = GameBoard.getBoard()[i];
 
         cell.addEventListener('click', () => {
