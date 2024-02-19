@@ -32,7 +32,10 @@ const GameBoard = (() => {
             [0, 3, 6], [1, 4, 7], [2, 5, 8],
             [0, 4, 8], [2, 4, 6]];
         for (let i of winningCombos) {
-            if (i) {}
+            const [a, b, c] = i;
+            if (board[a] === board[b] && board[b] === board[c]) {
+                return board[a]
+            }
         } return false;
     }
     
@@ -62,10 +65,10 @@ const GameController = (() => {
             switchPlayer()
         }
     }
-
+    const getWhosTurn = () => currentPlayer.name;
     const getWinner = () => winner;
 
-    return {switchPlayer, move, getWinner}
+    return {switchPlayer, move, getWhosTurn, getWinner}
 })();
 
 const makeBoard = () => {
@@ -75,16 +78,29 @@ const makeBoard = () => {
     for (let i = 0; i < 9; i++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
-        cell.textContent = GameBoard.getBoard()[i];
+        cell.innerHTML = GameBoard.getBoard()[i];
 
         cell.addEventListener('click', () => {
             if(!GameController.getWinner() && GameBoard.isEmpty(i)) {
                 GameController.move(i);
                 makeBoard()
+                turn()
             }
         })
         board.appendChild(cell);
     }
 };
 
+const turn = () => {
+    const message = document.querySelector('#turn')
+    const winner = GameController.getWinner();
+
+    if(winner) {
+        message.innerHTML = `${winner.name} has won!`
+    } else {
+        message.innerHTML = `${GameController.getWhosTurn()}'s turn`
+    }
+};
+
 makeBoard()
+turn()
