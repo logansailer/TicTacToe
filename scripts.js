@@ -46,14 +46,10 @@ function Player (name, piece) {
 
 const GameController = (() => {
     let currentPlayer = p1;
-    let winner = null;
+    let winner = false;
 
     const switchPlayer = () => {
-        if (currentPlayer = p1) {
-            currentPlayer = p2;
-        } else {
-            currentPlayer = p1;
-        }
+        currentPlayer = (currentPlayer === p1) ? p2 : p1;
     }
     //places piece in clicked tile, then checks if that move wins game. If not, switches player
     const move = (index) => {
@@ -63,7 +59,7 @@ const GameController = (() => {
             if (winner && winner != 'tie') {
                 winner = currentPlayer;
             }
-            switchPlayer();
+            switchPlayer()
         }
     }
 
@@ -82,8 +78,6 @@ const makeBoard = () => {
         cell.textContent = GameBoard.getBoard()[i];
 
         cell.addEventListener('click', () => {
-            console.log(GameBoard.isEmpty(i))
-            console.log(GameController.getWinner())
             if(!GameController.getWinner() && GameBoard.isEmpty(i)) {
                 GameController.move(i);
                 makeBoard()
