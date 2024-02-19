@@ -48,8 +48,13 @@ function Player (name, piece) {
 };
 
 const GameController = (() => {
-    let currentPlayer = p1;
+    let currentPlayer;
     let winner = false;
+
+    const start = (p1) => {
+        currentPlayer = p1;
+        winner = false;
+    }
 
     const switchPlayer = () => {
         currentPlayer = (currentPlayer === p1) ? p2 : p1;
@@ -68,7 +73,7 @@ const GameController = (() => {
     const getWhosTurn = () => currentPlayer.name;
     const getWinner = () => winner;
 
-    return {switchPlayer, move, getWhosTurn, getWinner}
+    return { start, switchPlayer, move, getWhosTurn, getWinner }
 })();
 
 const makeBoard = () => {
@@ -102,5 +107,16 @@ const turn = () => {
     }
 };
 
+const reset = () => {
+    GameBoard.resetBoard()
+    GameController.start(p1);
+    makeBoard();
+    turn();
+};
+
+const restartButton = document.querySelector('#restart-button')
+restartButton.addEventListener('click', reset)
+
+GameController.start(p1);
 makeBoard()
 turn()

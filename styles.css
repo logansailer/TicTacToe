@@ -2,17 +2,36 @@
     font-family: sans-serif;
 }
 
+body{
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header{
+    text-align: center;
+}
+
 #board{
-    border: 2px solid black;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
 }
 
 .cell{
-    border: 1px solid grey;
-    height: 100px;
-    width: 1fr;
+    border: 2px solid grey;
     font-size: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.turn {
     text-align: center;
+}
+
+.button{
+    display: block;
+    margin: auto;
 }
