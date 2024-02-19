@@ -33,7 +33,7 @@ const GameBoard = (() => {
             [0, 4, 8], [2, 4, 6]];
         for (let i of winningCombos) {
             const [a, b, c] = i;
-            if (board[a] === board[b] && board[b] === board[c]) {
+            if (board[a] && board[a] === board[b] && board[b] === board[c]) {
                 return board[a]
             }
         } return false;
@@ -64,7 +64,7 @@ const GameController = (() => {
         if(!winner && GameBoard.isEmpty(index)) {
             GameBoard.placePiece(currentPlayer.piece, index);
             winner = GameBoard.checkForWin()
-            if (winner && winner != 'tie') {
+            if (winner) {
                 winner = currentPlayer;
             }
             switchPlayer()
